@@ -228,7 +228,7 @@ void loop()
 		}
 		if(Config.digi.active)
 		{
-			if(msg->getPath().indexOf(Config.callsign) != -1)
+			if(msg->getSource().indexOf(Config.callsign) != -1 || msg->getPath().indexOf(Config.callsign) != -1)
 			{
 				logPrintD("Message already received as repeater: '");
 				logPrintD(msg->toString());
@@ -261,7 +261,7 @@ void loop()
 				logPrintD(String(lora_aprs.packetRssi()));
 				logPrintD(" and SNR ");
 				logPrintlnD(String(lora_aprs.packetSnr()));
-				msg->setPath(String(Config.callsign) + "*");
+				msg->setPath(msg->getPath() + "," + Config.callsign + "*");
 				lora_aprs.sendMessage(msg);
 				lastMessages.insert({secondsSinceStartup, msg});
 			}
