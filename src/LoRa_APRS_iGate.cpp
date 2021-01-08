@@ -261,7 +261,14 @@ void loop()
 				logPrintD(String(lora_aprs.packetRssi()));
 				logPrintD(" and SNR ");
 				logPrintlnD(String(lora_aprs.packetSnr()));
-				msg->setPath(msg->getPath() + "," + Config.callsign + "*");
+				if(msg->getPath().length() > 0)
+				{
+					msg->setPath(msg->getPath() + "," + Config.callsign + "*");
+				}
+				else
+				{
+					msg->setPath(Config.callsign + "*");
+				}
 				lora_aprs.sendMessage(msg);
 				lastMessages.insert({secondsSinceStartup, msg});
 			}
